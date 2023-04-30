@@ -1,24 +1,21 @@
-import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const buttonTitles = {
   IDLE: "Idle",
   SUBMITTING: "Submitting...",
-  SUCCESS: "Clicked",
+  SUBMITTED: "Clicked",
 };
 
 const HomePage = () => {
   const [buttonClickCount, setButtonClickCount] = useState(0);
   const [buttonState, setButtonState] = useState<
-    "IDLE" | "SUBMITTING" | "SUCCESS"
+    "IDLE" | "SUBMITTING" | "SUBMITTED"
   >("IDLE");
 
   useEffect(() => {
     if (buttonState === "SUBMITTING") {
       const timeOut = setTimeout(() => {
-        setButtonState("SUCCESS");
+        setButtonState("SUBMITTED");
         setButtonClickCount((count) => count + 1);
       }, 2000);
       return () => clearTimeout(timeOut);
@@ -26,9 +23,7 @@ const HomePage = () => {
   }, [buttonState]);
 
   return (
-    <main
-      className={`flex min-h-screen items-center justify-center p-24 ${inter.className}`}
-    >
+    <main className={`flex min-h-screen items-center justify-center p-24`}>
       <div className="max-w-xl mx-auto px-4 w-full">
         <h2>{buttonTitles[buttonState]}</h2>
         <button
